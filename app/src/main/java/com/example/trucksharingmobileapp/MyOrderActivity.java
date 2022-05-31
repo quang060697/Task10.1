@@ -10,12 +10,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class MyOrderActivity extends AppCompatActivity implements OrderAdapter.OnRowClickListener{
     String username;
@@ -99,6 +97,13 @@ public class MyOrderActivity extends AppCompatActivity implements OrderAdapter.O
             String length = tempt.get(position).getLength();
             String quantity = tempt.get(position).getQuantity();
             String type = tempt.get(position).getType();
+            String pickupLocation = tempt.get(position).getPickupLocation();
+            double pickupLatitude = tempt.get(position).getPickupLatitude();
+            double pickupLongitude = tempt.get(position).getPickupLongitude();
+            String dropoffLocation = tempt.get(position).getDropoffLocation();
+            double dropoffLatitude = tempt.get(position).getDropoffLatitude();
+            double dropoffLongitude = tempt.get(position).getDropoffLongitude();
+
             int image = goodImageList[position];
 
             Intent intent1 = new Intent(getApplicationContext(),OrderDetailsActivity.class);
@@ -113,6 +118,13 @@ public class MyOrderActivity extends AppCompatActivity implements OrderAdapter.O
             intent1.putExtra("quantity",quantity);
             intent1.putExtra("type",type);
             intent1.putExtra("image",image);
+            intent1.putExtra("pickupLocation",pickupLocation);
+            intent1.putExtra("pickupLatitude",pickupLatitude);
+            intent1.putExtra("pickupLongitude",pickupLongitude);
+            intent1.putExtra("dropoffLocation",dropoffLocation);
+            intent1.putExtra("dropoffLatitude",dropoffLatitude);
+            intent1.putExtra("dropoffLongitude",dropoffLongitude);
+            intent1.putExtra("position",position);
 
 
             startActivity(intent1);

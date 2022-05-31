@@ -16,14 +16,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(@Nullable Context context) {
 
-        super(context, "truck_sharing_db", null, 11);
+        super(context, "truck_sharing_db", null, 21);
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String CREATE_USER_TABLE = "CREATE TABLE USERS(USERID INTEGER PRIMARY KEY AUTOINCREMENT ,FULLNAME TEXT, USERNAME TEXT, PASSWORD TEXT,PHONENUMBER TEXT)";
         String CREATE_TRUCK_TABLE = "CREATE TABLE TRUCKS(TRUCKID INTEGER PRIMARY KEY AUTOINCREMENT ,TRUCKNAME TEXT, TRUCKDESCRIPTION TEXT)";
-        String CREATE_ORDER_TABLE = "CREATE TABLE ORDERS(ORDERID INTEGER PRIMARY KEY AUTOINCREMENT ,SENDERNAME TEXT,RECEIVERNAME TEXT, PICKUPTIME TEXT,DROPOFFTIME TEXT,WEIGHT TEXT,HEIGHT TEXT,WIDTH TEXT,LENGHT TEXT,QUANTITY TEXT,TYPE TEXT)";
-
+        String CREATE_ORDER_TABLE = "CREATE TABLE ORDERS(ORDERID INTEGER PRIMARY KEY AUTOINCREMENT ,SENDERNAME TEXT,RECEIVERNAME TEXT, PICKUPTIME TEXT,DROPOFFTIME TEXT,WEIGHT TEXT,HEIGHT TEXT,WIDTH TEXT,LENGHT TEXT,QUANTITY TEXT,TYPE TEXT, PICKUPLOCATION TEXT,  PICKUPLATITUDE REAL, PICKUPLONGITUDE REAL, DROPOFFLOCATION TEXT, DROPOFFLATITUDE REAL, DROPOFFLONGITUDE REAL )";
 
         String ROW1 = "INSERT INTO TRUCKS (TRUCKNAME,TRUCKDESCRIPTION) VALUES ('Bandito','El Bandito was a Chevy S-10 monster truck owned by Don King out of Missouri. The truck was a former Terry Woodcock truck, then became El Bandito in 2004 and ran until 2012 when the truck became Bucked Up under Straight Up Racing');";
         String ROW2 = "INSERT INTO TRUCKS (TRUCKNAME,TRUCKDESCRIPTION) VALUES ('Rambo','Rambo was a series of Chevrolet monster trucks owned by Bill Weaver Jr. out of Hastings, New York. It was best known for winning 2 Thunder Nationals championships');";
@@ -126,6 +125,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("LENGHT",order.getLength());
         contentValues.put("QUANTITY",order.getQuantity());
         contentValues.put("TYPE",order.getType());
+        contentValues.put("PICKUPLOCATION",order.getPickupLocation());
+        contentValues.put("PICKUPLATITUDE",order.getPickupLatitude());
+        contentValues.put("PICKUPLONGITUDE",order.getPickupLongitude());
+        contentValues.put("DROPOFFLOCATION",order.getDropoffLocation());
+        contentValues.put("DROPOFFLATITUDE",order.getDropoffLatitude());
+        contentValues.put("DROPOFFLONGITUDE",order.getDropoffLongitude());
         long newRow = db.insert("ORDERS",null,contentValues);
         db.close();
         return newRow;
@@ -149,8 +154,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String length = cursor.getString(8);
                 String quantity = cursor.getString(9);
                 String type = cursor.getString(10);
+                String pickupLocation = cursor.getString(11);
+                double pickupLatitude = cursor.getDouble(12);
+                double pickupLongitude = cursor.getDouble(13);
+                String dropoffLocation = cursor.getString(14);
+                double dropoffLatitude = cursor.getDouble(15);
+                double dropoffLongitude = cursor.getDouble(16);
 
-                Order order = new Order(sendername,receivername,pickuptime,dropofftime,weight,height,width,length,quantity,type);
+                Order order = new Order(sendername,receivername,pickuptime,dropofftime,weight,height,width,length,quantity,type,pickupLocation,pickupLatitude,pickupLongitude,dropoffLocation,dropoffLatitude,dropoffLongitude);
                 orderList.add(order);
 
             } while (cursor.moveToNext());

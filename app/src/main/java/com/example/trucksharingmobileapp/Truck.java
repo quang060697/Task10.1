@@ -1,7 +1,5 @@
 package com.example.trucksharingmobileapp;
 
-import java.util.List;
-
 public class Truck {
     private String truckname;
     private String description;

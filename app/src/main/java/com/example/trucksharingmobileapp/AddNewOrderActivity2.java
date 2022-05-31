@@ -29,6 +29,13 @@ public class AddNewOrderActivity2 extends AppCompatActivity {
         String pickupTime = intent.getStringExtra("pickupTime");
         String dropoffTime = intent.getStringExtra("dropoffTime");
 
+        String pickUpLocation = intent.getStringExtra("pickUpLocation");
+        double pickUpLatitude = intent.getDoubleExtra("pickUpLatitude",0);
+        double pickUpLongitude = intent.getDoubleExtra("pickUpLongitude",0);
+        String dropOffLocation = intent.getStringExtra("dropOffLocation");
+        double dropOffLatitude = intent.getDoubleExtra("dropOffLatitude",0);
+        double dropOffLongitude = intent.getDoubleExtra("dropOffLongitude",0);
+
         TextView otherGood = findViewById(R.id.otherGoodTextView);
         EditText otherGoodInput = findViewById(R.id.otherGoodInput);
 
@@ -128,9 +135,9 @@ public class AddNewOrderActivity2 extends AppCompatActivity {
                     vehicleType = otherVehicle;
                 }
 
-                Order order = new Order(username,receivername,pickupTime,dropoffTime,weight,height,width,length,quantity,goodType);
+                Order order = new Order(username,receivername,pickupTime,dropoffTime,weight,height,width,length,quantity,goodType,pickUpLocation,pickUpLatitude,pickUpLongitude,dropOffLocation,dropOffLatitude,dropOffLongitude);
                 db.insertOrder(order);
-                Toast.makeText(AddNewOrderActivity2.this, "Create Order Successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddNewOrderActivity2.this,"Add new order successfully" , Toast.LENGTH_SHORT).show();
 
                 Intent intent4 = new Intent(AddNewOrderActivity2.this,HomeActivity.class);
                 intent4.putExtra("username",username);
